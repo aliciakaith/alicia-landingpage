@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import { site } from '../content/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = site.title, description = site.description } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="en" data-reduce-motion={site.reduceMotion ? 'true' : 'false'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#F4F4F3" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Fonts: Latin subset only (Google's css2 endpoint serves unicode-range subsets), swap on all three. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      Marks the document as JS-capable before first paint so entrance states
+      (opacity 0) only apply when the scroll module will actually reveal them.
+      Also resolves `reduced` synchronously: OS preference or the site flag.
+    -->
+    <script is:inline>
+      (function (d) {
+        d.classList.add('js');
+        if (d.dataset.reduceMotion === 'true' || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          d.classList.add('reduced');
+        }
+      })(document.documentElement);
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script src="../scripts/page.ts"></script>
+  </body>
+</html>

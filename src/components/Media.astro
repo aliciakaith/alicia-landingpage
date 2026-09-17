@@ -1,0 +1,99 @@
+---
+/**
+ * Image slot. Without `image` it renders the handoff's striped placeholder with
+ * a mono caption naming the asset. With `image` it renders <picture> with
+ * AVIF + WebP sources, explicit width/height and lazy loading.
+ */
+import { Picture } from 'astro:assets';
+import type { HTMLAttributes } from 'astro/types';
+
+type Tone = 'pink' | 'lime' | 'violet' | 'orange' | 'paper-2' | 'glass';
+
+interface Props extends HTMLAttributes<'span'> {
+  /** Placeholder fill. Ignored once a real image is supplied. */
+  tone?: Tone;
+  /** CSS aspect-ratio, e.g. "16/10". */
+  ratio?: string;
+  radius?: string;
+  /** Stripe width in px and stripe alpha, per the prototype's per-slot values. */
+  stripe?: number;
+  alpha?: number;
+  /** Mono caption naming the asset needed. Hidden once the image is supplied. */
+  caption?: string;
+  /** Caption offsets / size, where the prototype varied them. */
+  cx?: number;
+  cy?: number;
+  cs?: number;
+  image?: ImageMetadata;
+  alt?: string;
+  /** Above the fold: eager + high fetch priority. */
+  priority?: boolean;
+  widths?: number[];
+  sizes?: string;
+  /** Tall page capture: fit width and slowly pan top to bottom inside the frame. */
+  pan?: boolean;
+  /** object-position for cover crops, e.g. "50% 30%". */
+  position?: string;
+}
+
+const {
+  tone = 'pink',
+  ratio = '16/10',
+  radius = '20px',
+  stripe = 12,
+  alpha = 0.07,
+  caption,
+  cx = 18,
+  cy = 16,
+  cs = 11,
+  image,
+  alt = '',
+  priority = false,
+  widths,
+  sizes,
+  pan = false,
+  position,
+  class: className,
+  style,
+  ...rest
+} = Astro.props;
+
+const vars = [
+  `--ratio:${ratio}`,
+  `--radius:${radius}`,
+  `--stripe:${stripe}px`,
+  `--stripe-a:${alpha}`,
+  `--cx:${cx}px`,
+  `--cy:${cy}px`,
+  `--cs:${cs}px`,
+  position ? `--pos:${position}` : "",
+  style ?? '',
+]
+  .filter(Boolean)
+  .join(';');
+---
+
+<span class:list={['media', `tone-${tone}`, pan && 'media-pan', className]} style={vars} {...rest}>
+  <span class="media-fill">
+    {
+      image ? (
+        <Picture
+          src={image}
+          alt={alt}
+          formats={['avif', 'webp']}
+          fallbackFormat="webp"
+          widths={widths}
+          sizes={sizes}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          fetchpriority={priority ? 'high' : 'auto'}
+          pictureAttributes={{ class: 'media-pic' }}
+        />
+      ) : (
+        <span class="media-stripes" aria-hidden="true" />
+      )
+    }
+  </span>
+  {caption && !image && <span class="media-caption">{caption}</span>}
+  <slot />
+</span>

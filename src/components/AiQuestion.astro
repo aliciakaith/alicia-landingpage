@@ -1,0 +1,33 @@
+---
+import { site } from '../content/site';
+---
+
+<section class="ai" aria-labelledby="ai-title">
+  <div class="container">
+    <h2 class="ai-title" id="ai-title" data-reveal>You asked what I've built with AI.</h2>
+    <p class="ai-lead" data-reveal>
+      Every project meant making the same decisions again. It drove me a bit mad. So I taught Claude how we do it.
+    </p>
+    <div class="ai-cols" data-reveal>
+      <div>
+        <p class="ai-label">what I built</p>
+        <p class="ai-copy">A Claude skill with an instruction file and starting prompt that encode those decisions. I tested it across real client sites, fixed the things it got wrong, then wrote the process up as an SOP so the team could use it without me.</p>
+      </div>
+      <div>
+        <p class="ai-label">the honest bit</p>
+        <p class="ai-copy">It still gets things wrong. I keep the list.</p>
+      </div>
+    </div>
+    <div class="ai-payoff" data-reveal>
+      <p class="ai-payoff-label">what happened</p>
+      <div class="ai-payoff-row">
+        <span class="ai-figure ai-before" id="baselineFigure">{site.migrationBaseline}</span>
+        <svg class="ai-arrow" width="90" height="24" viewBox="0 0 90 24" aria-hidden="true">
+          <path d="M2 12 H74 M64 4 L76 12 L64 20" fill="none" stroke="var(--pink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span class="ai-figure ai-after">10 minutes</span>
+      </div>
+      <p class="ai-caption">It's the team's default starting point now.</p>
+    </div>
+  </div>
+</section>

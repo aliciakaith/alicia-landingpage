@@ -1,0 +1,23 @@
+---
+const tiles = [
+  { tone: 'pink', n: 20, suffix: '%', caption: 'sales increase on a health e-commerce site I owned end to end' },
+  { tone: 'lime', n: 12, suffix: '%', caption: 'reduction in bounce after testing pages and forms' },
+  { tone: 'violet', n: 3481, suffix: '', caption: 'landing page views from £250 of ad spend' },
+  { tone: 'orange', n: 15, suffix: '+', caption: 'sites shipped across Shopify, WordPress, Wix and custom builds' },
+];
+const fmt = (n: number, s: string) => n.toLocaleString('en-US') + s;
+---
+
+<section class="numbers" id="numbers" aria-labelledby="numbers-title">
+  <div class="container">
+    <h2 class="numbers-title" id="numbers-title" data-reveal>The numbers</h2>
+    <div class="tiles">
+      {tiles.map((t, i) => (
+        <div class:list={['tile', `tone-${t.tone}`]} data-tile style={`--d:${i * 100}ms`}>
+          <span class="tile-num" data-count={t.n} data-suffix={t.suffix}>{fmt(t.n, t.suffix)}</span>
+          <span class="tile-cap">{t.caption}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+---
+import { site } from '../content/site';
+---
+
+<section class="close" aria-labelledby="close-line">
+  <div class="close-inner">
+    <p class="close-where" data-reveal>I think we'd have a lot of fun building together.</p>
+    <p class="close-rights" data-reveal>I've got full working rights and I'd be excited to contribute to the team.</p>
+    <p class="close-resume-note" data-reveal>My resume is below if you want the traditional version too.</p>
+    <a class="btn-outline" href={site.resumeUrl} data-reveal>Resume</a>
+
+    <div class="close-big">
+      <p class="close-mono" data-reveal>three hours for this page</p>
+      <h2 class="close-line" id="close-line" data-scale data-threshold="0.4">Imagine a week.</h2>
+    </div>
+
+    <a class="btn-pink-lg" id="closeCta" href={`mailto:${site.email}`}>Email me<span class="dot dot-ink" aria-hidden="true"></span></a>
+
+    <p class="close-sign" data-reveal>Let's fricking build.</p>
+  </div>
+</section>

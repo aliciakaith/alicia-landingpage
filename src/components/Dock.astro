@@ -1,0 +1,51 @@
+---
+import Media from './Media.astro';
+import { site } from '../content/site';
+import { images } from '../content/images';
+
+const links = [
+  { href: '#whyme', label: 'Why me' },
+  { href: '#work', label: 'Work' },
+  { href: '#process', label: 'Process' },
+  { href: '#numbers', label: 'The numbers' },
+];
+---
+
+<!-- The only stateful piece on the page. Open/close logic lives in scripts/page.ts. -->
+<div class="dock" id="aboutDock">
+  <div class="dock-panel" id="aboutPanel">
+    <div class="dock-panel-inner">
+      <Media class="dock-photo" tone="pink" ratio="16/10" radius="16px" stripe={10} alpha={0.08} caption="photo of me" cx={14} cy={12} cs={10} image={images.dockPhoto} alt={`Photo of ${site.name}`} position="50% 35%" widths={[352, 704]} sizes="352px" />
+
+      <div class="dock-id">
+        <span class="dock-name">{site.name}</span>
+        <span class="dock-tag">Design · Build · Market</span>
+      </div>
+
+      <p class="dock-bio">
+        Software Engineering and Marketing, used both every day. Full working rights.
+      </p>
+
+      <nav class="dock-links" aria-label="Jump to section">
+        {links.map((l) => (
+          <a href={l.href} data-docklink>{l.label}<span aria-hidden="true">→</span></a>
+        ))}
+      </nav>
+
+      <div class="dock-btns">
+        <a href={site.resumeUrl}>Resume</a>
+        <a href={site.linkedinUrl} rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dock-row">
+    <button class="dock-toggle" id="aboutToggle" type="button" aria-expanded="false" aria-controls="aboutPanel">
+      <Media class="dock-avatar" tone="pink" ratio="1/1" radius="999px" stripe={6} alpha={0.12} image={images.dockAvatar} alt="" widths={[60]} />
+      About me
+      <span class="dock-chevron" aria-hidden="true">▲</span>
+    </button>
+
+    <a class="dock-talk" id="talkPill" href={`mailto:${site.email}`}>Let's talk<span class="dot dot-ink" aria-hidden="true"></span></a>
+  </div>
+</div>

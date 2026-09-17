@@ -1,0 +1,68 @@
+---
+import Media from './Media.astro';
+import { site } from '../content/site';
+import { images } from '../content/images';
+
+// Back to front. Resting offsets live in CSS (.fan-0 … .fan-3).
+const fans = [
+  { tone: 'violet', image: images.hero0, alt: 'Nunani site on a laptop', position: '50% 42%' },
+  { tone: 'lime', image: images.hero1, alt: 'Accurate Car Services site on a laptop', position: '50% 45%' },
+  { tone: 'orange', image: images.hero2, alt: 'Glossy Boys store on a phone', position: '50% 28%' },
+] as const;
+---
+
+<section class="hero" data-hero aria-labelledby="hero-title">
+  <svg class="ribbon" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <path id="ribbonCurve" d="M-120 830 C 260 900, 420 700, 720 560 C 1020 420, 1240 500, 1720 250"></path>
+    </defs>
+    <use href="#ribbonCurve" fill="none" stroke="var(--pink-soft)" stroke-width="54" stroke-linecap="round"></use>
+    <text class="ribbon-text">
+      <textPath id="ribbonText" href="#ribbonCurve" startOffset="0">{Array(10).fill('DESIGN • BUILD • MARKET • ').join('')}</textPath>
+    </text>
+  </svg>
+
+  <div class="container hero-inner">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1 class="hero-title" id="hero-title" data-word style="--d:0ms">I start things.</h1>
+        <p class="hero-sub" data-word style="--d:90ms">Brands. Websites. AI tools. Businesses.</p>
+        <ul class="hero-tags" data-word style="--d:180ms">
+          <li><span class="ast" aria-hidden="true">✳</span>Design</li>
+          <li><span class="ast" aria-hidden="true">✳</span>Build</li>
+          <li><span class="ast" aria-hidden="true">✳</span>Market</li>
+        </ul>
+      </div>
+
+      <div class="hero-stack">
+        <div class="hero-fan" data-fan-host tabindex="0" role="group" aria-roledescription="carousel" aria-label="Featured work. Swipe, click, or use the arrow keys to browse.">
+          <div class="fan-stage">
+            {fans.map((f, i) => (
+              <Media class={`fan fan-${i} at-${i}`} tone={f.tone} ratio="4/5" radius="20px" stripe={12} alpha={0.07} image={f.image} alt={f.alt} position={f.position} priority widths={[536]} sizes="(max-width: 900px) 100vw, 400px" data-fan />
+            ))}
+            <Media class="fan fan-3 at-3" tone="pink" ratio="4/5" radius="20px" stripe={12} alpha={0.07} image={images.hero3} alt="Isola Health site on a laptop" position="50% 38%" priority widths={[536]} sizes="(max-width: 900px) 100vw, 400px" data-fan />
+            <span class="fan-caption">featured work</span>
+            <span class="fan-badge" aria-hidden="true">↗</span>
+            <span class="fan-hint" aria-hidden="true"><span>←</span>Swipe<span>→</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="hero-note" data-reveal>
+          <Media class="hero-note-thumb" tone="lime" ratio="1/1" radius="12px" stripe={8} alpha={0.08} image={images.heroNote} alt="Education site thumbnail" priority widths={[116]} />
+          <div class="hero-note-text">
+            <p class="hero-note-eyebrow">currently building</p>
+            <p class="hero-note-title">A 100-page education site, solo</p>
+          </div>
+        </div>
+
+        <div class="hero-foot-inner" data-reveal>
+          <p class="hero-foot-copy">You posted an AI Web Design Marketer role. So I built you a website instead of sending a resume.</p>
+          <p class="hero-foot-mono">Three hours. Claude Code.</p>
+          <a class="btn-ink" href={`mailto:${site.email}`}>Email me<span class="dot dot-pink" aria-hidden="true"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

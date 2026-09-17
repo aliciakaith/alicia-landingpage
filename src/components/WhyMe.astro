@@ -1,0 +1,55 @@
+---
+const reasons = [
+  {
+    tone: 'pink',
+    title: 'I build things before anyone asks',
+    body: [
+      'I built an AI migration tool because we kept making the same Webflow-to-code decisions by hand.',
+      'I rebuilt a CMS when the ticket didn’t cover it.',
+      'I built a separate journey for parents after working out they were the ones making the decision, not the students.',
+    ],
+    kicker: 'I tend to see the thing that’s missing and then have a hard time leaving it alone.',
+  },
+  {
+    tone: 'lime',
+    title: 'I’ve started things from scratch',
+    body: [
+      'A brand at school in Indonesia that reached 24,000 followers, run entirely by me.',
+      'My mum’s e-commerce business, which I helped set up. It’s sold hundreds of thousands of products since.',
+    ],
+    kicker: 'Sekala, my own studio. Still running, still shipping client sites.',
+  },
+  {
+    tone: 'violet',
+    title: 'I know where AI falls over',
+    body: [
+      'I use Claude Code, Cursor and my own workflows constantly. I also keep a written list of what they get wrong. Spacing. Animation. The occasional decision that makes absolutely no sense.',
+    ],
+    kicker: 'I want to know where the tool stops being useful. That’s usually where I take over.',
+  },
+];
+---
+
+<section class="whyme" id="whyme" aria-labelledby="whyme-title">
+  <!-- Pinned dead centre; the cards below scroll past it. -->
+  <div class="whyme-pin" aria-hidden="true">
+    <div class="container whyme-pin-inner">
+      <p class="whyme-title">So why me?</p>
+      <p class="whyme-sub">three reasons</p>
+    </div>
+  </div>
+  <h2 class="sr-only" id="whyme-title">So why me? Three reasons</h2>
+
+  <div class="container whyme-cards">
+    {reasons.map((r, i) => (
+      <article class:list={['reason', `tone-${r.tone}`, i % 2 === 1 && 'reason-right']} data-float>
+        <p class="reason-label">reason {String(i + 1).padStart(2, '0')}</p>
+        <h3>{r.title}</h3>
+        <div class="reason-body">
+          {r.body.map((p) => <p>{p}</p>)}
+          <p class="kicker">{r.kicker}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

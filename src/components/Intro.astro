@@ -1,0 +1,24 @@
+---
+const stats = [
+  { n: 15, suffix: '+', label: 'sites shipped' },
+  { n: 24000, suffix: '', label: 'followers on a brand I started' },
+  { n: 20, suffix: '%', label: 'sales lift' },
+  { n: 3481, suffix: '', label: 'clicks from £250' },
+];
+const fmt = (n: number, s: string) => n.toLocaleString('en-US') + s;
+---
+
+<section class="intro">
+  <div class="container">
+    <p class="intro-lead" data-reveal>
+      I studied Software Engineering and Marketing together, and somehow ended up using both every day. I design the experience, build the thing, work out how to get people to it, then keep messing with it after launch.
+    </p>
+    <div class="intro-stats" data-reveal>
+      {stats.map((s) => (
+        <span class="intro-stat">
+          <b data-count={s.n} data-suffix={s.suffix}>{fmt(s.n, s.suffix)}</b><br />{s.label}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>

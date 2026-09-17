@@ -1,0 +1,85 @@
+---
+import Media from './Media.astro';
+import { images } from '../content/images';
+
+const steps = [
+  {
+    tone: 'violet',
+    title: 'Work out who’s actually deciding',
+    copy: 'Before anything gets designed I want to know who lands on the page and what they’re trying to avoid. On the education site that meant discovering parents were making the call for under-18 students, which changed the whole structure.',
+    metric: '2 audiences',
+    metricCaption: 'found, not assumed',
+    imageCaption: 'research artefact',
+    image: images.process0,
+  },
+  {
+    tone: 'pink',
+    title: 'Design it in Figma',
+    copy: 'Layout, hierarchy, page flow. I’m deciding what someone sees first, what they see next, and what I’m quietly asking them to do.',
+    metric: '100 pages',
+    metricCaption: 'designed solo',
+    imageCaption: 'figma frame',
+    image: images.process1,
+  },
+  {
+    tone: 'lime',
+    title: 'Build it properly',
+    copy: 'HTML, CSS, JavaScript, React, Next.js, Astro, Liquid. Webflow migrations into headless builds with a CMS behind them, so the client can update their own content without calling me. Fast, mobile-first, SEO structured in rather than bolted on.',
+    metric: '15+ sites',
+    metricCaption: 'shipped and live',
+    imageCaption: 'build screenshot',
+    image: images.process2,
+  },
+  {
+    tone: 'orange',
+    title: 'Launch, then start paying attention',
+    copy: 'A/B tests on pages, forms and CTAs. Where people leave. What they ignore. On the health e-commerce site that took sales up 20% and bounce down 12%.',
+    metric: '+20% / −12%',
+    metricCaption: 'sales up, bounce down',
+    imageCaption: 'analytics screenshot',
+    image: images.process3,
+  },
+  {
+    tone: 'panel',
+    title: 'Send people to it',
+    copy: 'Meta and LinkedIn ads, email, reporting. I’ve run the spend rather than written the brief, which means I notice when the page and the ad are promising different things.',
+    metric: '3,481 clicks',
+    metricCaption: 'from £250 of spend',
+    imageCaption: 'ads dashboard',
+    image: images.process4,
+  },
+];
+---
+
+<section class="process" id="process" aria-labelledby="process-title">
+  <div class="container">
+    <h2 class="process-title" id="process-title" data-reveal>
+      I can take a site from Figma to people clicking it.
+    </h2>
+
+    <!-- Folder-tab cards: each is sticky with a stepped top, so they stack as you scroll. -->
+    <div class="steps">
+      {steps.map((s, i) => (
+        <div class:list={['step', `step-${i}`, `fill-${s.tone}`]}>
+          <span class="step-tab">step / {String(i + 1).padStart(2, '0')}</span>
+          <div class="step-card">
+            <div class="step-grid">
+              <div>
+                <h3>{s.title}</h3>
+                <p class="step-copy">{s.copy}</p>
+                <p class="step-metric">{s.metric}</p>
+                <p class="step-metric-cap">{s.metricCaption}</p>
+              </div>
+              <Media tone="glass" ratio="4/3" radius="18px" stripe={12} alpha={0.06} caption={s.imageCaption} image={s.image} alt={s.imageCaption} sizes="(max-width: 640px) 100vw, 560px" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="process-ai" data-reveal>
+      <p class="process-ai-label">underneath all of it: AI</p>
+      <p class="process-ai-copy">Claude Code, Cursor, and my own skills and workflows. I build tooling when something gets annoying enough to be worth fixing. It speeds up steps 02 and 03 dramatically. It has opinions about steps 01, 04 and 05 that I mostly ignore.</p>
+    </div>
+  </div>
+</section>

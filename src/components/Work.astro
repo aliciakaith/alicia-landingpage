@@ -1,0 +1,65 @@
+---
+import Media from './Media.astro';
+import { work } from '../content/site';
+import { images } from '../content/images';
+
+const gridImages = [images.work0, images.work1, images.work2, images.work3, images.work4, images.work5];
+const arcImages = [images.arc0, images.arc1, images.arc2, images.arc3, images.arc4, images.arc5];
+const arc = work.more.map((m, i) => ({ ...m, image: arcImages[i] }));
+// Twice round so the wheel is dense enough to always show five or six cards.
+const wheel = [...arc, ...arc];
+const external = (href: string) => (href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {});
+---
+
+<section class="work" id="work" aria-labelledby="work-title">
+  <div class="container">
+    <h2 class="work-title" id="work-title" data-reveal>Look what I've made.</h2>
+
+    <a class="work-card work-card-lg" href={work.featured.href} {...external(work.featured.href)}>
+      <Media tone="pink" ratio="16/9" radius="26px" stripe={14} alpha={0.06} caption="site screenshot — 16:9" cx={22} cy={20} image={work.featured.pan ? images.workFeatured : images.workFeaturedCrop} alt={work.featured.name} pan={work.featured.pan} widths={work.featured.pan ? [800, 1200, 1600] : [800, 1200, 1600, 2000]} sizes="(max-width: 1280px) 100vw, 1168px">
+        <span class="work-pill">
+          <b>{work.featured.name}</b>
+          <em>/ {work.featured.metric}</em>
+          <i aria-hidden="true">↗</i>
+        </span>
+      </Media>
+    </a>
+
+    <div class="work-grid">
+      {work.grid.map((w, i) => (
+        <a class="work-card work-card-sm" href={w.href} {...external(w.href)}>
+          <Media tone={w.tone} ratio="16/11" radius="26px" stripe={12} alpha={0.06} caption="site screenshot" cx={20} cy={18} image={gridImages[i]} alt={w.name} position={'position' in w ? w.position : undefined} widths={[400, 800, 1200]} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 376px">
+            <span class="work-pill">
+              <b>{w.name}</b>
+              <em>/ {w.metric}</em>
+              <i aria-hidden="true">↗</i>
+            </span>
+          </Media>
+        </a>
+      ))}
+    </div>
+
+    <div class="work-now" data-reveal>
+      <p class="work-now-label">currently building</p>
+      <p class="work-now-copy">
+        A 100-page international education site, solo. CMS migration. Booking and enquiry system. Translated versions. The lot.
+      </p>
+    </div>
+  </div>
+
+  <!-- Arc of cards around a centred link. Positions are computed in scripts/page.ts. -->
+  <div class="work-arc" id="workArc" data-arc-host data-threshold="0.25">
+    {wheel.map((a, i) =>
+      a.href ? (
+        <a class="arc-card" href={a.href} {...external(a.href)} aria-label={a.name} data-arc={i}>
+          <Media class="arc-media" tone={a.tone} ratio="16/11" radius="14px" stripe={9} alpha={0.08} image={a.image} alt="" widths={[420]} />
+        </a>
+      ) : (
+        <span class="arc-card" data-arc={i}>
+          <Media class="arc-media" tone={a.tone} ratio="16/11" radius="14px" stripe={9} alpha={0.08} image={a.image} alt={a.name} widths={[420]} />
+        </span>
+      ),
+    )}
+    <a class="see-more" href={work.seeMoreHref} {...external(work.seeMoreHref)}>See more works<span class="see-more-disc" aria-hidden="true">↗</span></a>
+  </div>
+</section>
