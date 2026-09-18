@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 import { site } from '../content/site';
 
 interface Props {
@@ -49,5 +50,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
   <body>
     <slot />
     <script src="../scripts/page.ts"></script>
+    <!-- Vercel Web Analytics: the only analytics on the page. No-op outside Vercel. -->
+    <Analytics />
   </body>
 </html>
